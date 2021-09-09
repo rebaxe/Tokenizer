@@ -1,0 +1,31 @@
+{
+  "name": "Laboration-1",
+  "version": "1.0.0",
+  "description": "1DV610 - Laboration 1 - Tokenizer",
+  "type": "module",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "lint": "npx eslint ./src || exit 0",
+    "lint:fix": "npx eslint ./src --fix || exit 0",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.lnu.se:1dv610/student/ra223ai/l1.git"
+  },
+  "author": "Rebecca Axelsson <ra223ai@student.lnu.se>",
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.1.3",
+    "eslint": "^7.32.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^5.0.0"
+  },
+  "eslintConfig": {
+    "extends": "@lnu",
+    "env": {
+      "mocha": true
+    }
+  }
+}
