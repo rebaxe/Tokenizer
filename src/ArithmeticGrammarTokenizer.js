@@ -5,6 +5,7 @@ export class ArithmeticGrammarTokenizer extends Tokenizer {
     super(string)
     this.numberRegExp = /^[0-9]+(\.([0-9])+)?/
     this.matchingTokens = this.analyzeStringForTokens()
+    this.activeToken = { tokenType: Object.keys(this.matchingTokens[this.activeTokenIndex])[0], tokenValue: Object.values(this.matchingTokens[this.activeTokenIndex])[0] }
   }
 
   /**

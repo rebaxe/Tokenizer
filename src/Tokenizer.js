@@ -11,6 +11,8 @@ export class Tokenizer {
   constructor (string) {
     this.stringToAnalyze = string
     this.matchingTokens = []
+    this.activeTokenIndex = 0
+    this.activeToken = { tokenType: null, tokenValue: null }
   }
 
   get identifiedMatchingTokens () {
@@ -19,6 +21,14 @@ export class Tokenizer {
 
   set identifiedMatchingTokens(tokens) {
     this._matchingTokens = [...tokens]
+  }
+
+  get activeToken () {
+    return this._activeToken
+  }
+
+  set activeToken (token) {
+    this._activeToken = token
   }
 
   // analyzeStringForTokens () {
@@ -41,7 +51,15 @@ export class Tokenizer {
   //   tokens.push({ END: '' })
   //   this.matchingTokens = tokens
   // }
-  // getNextToken () {
+  getNextToken () {
+    this.activeTokenIndex++
+    this._activeToken.tokenType = Object.keys(this.matchingTokens[this.activeTokenIndex])[0]
+    this._activeToken.tokenValue = Object.values(this.matchingTokens[this.activeTokenIndex])[0]
+  }
 
-  // }
+  getPreviousToken () {
+    this.activeTokenIndex--
+    this._activeToken.tokenType = Object.keys(this.matchingTokens[this.activeTokenIndex])[0]
+    this._activeToken.tokenValue = Object.values(this.matchingTokens[this.activeTokenIndex])[0]
+  }
 }
