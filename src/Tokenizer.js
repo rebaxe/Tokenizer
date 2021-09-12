@@ -1,3 +1,6 @@
+import { arithmethicAnalysis } from './ArithmeticGrammar.js'
+import { wordAndDotAnalysis } from './WordAndDotGrammar.js'
+
 /**
  * Module for the type tokenizer.
  */
@@ -8,58 +11,49 @@
  * @class
  */
 export class Tokenizer {
-  constructor (string) {
+  constructor (grammar, string) {
     this.stringToAnalyze = string
-    this.matchingTokens = []
+    this.grammarType = grammar
+    this.matchingTokens = this.analyzeString()
     this.activeTokenIndex = 0
-    this.activeToken = { tokenType: null, tokenValue: null }
+    this.activeToken = this.matchingTokens[this.activeTokenIndex]
   }
 
   get identifiedMatchingTokens () {
     return this._matchingTokens
   }
 
-  set identifiedMatchingTokens(tokens) {
-    this._matchingTokens = [...tokens]
-  }
+  // set identifiedMatchingTokens(tokens) {
+  //   this._matchingTokens = [...this.analyzeString()]
+  // }
 
   get activeToken () {
     return this._activeToken
   }
 
   set activeToken (token) {
-    this._activeToken = token
+    this._activeToken = this.matchingTokens[this.activeTokenIndex]
   }
 
-  // analyzeStringForTokens () {
-  //   const tokens = []
-  //   let word = ''
-  //   for (let i = 0; i < this.stringToAnalyze.length; i++) {
-  //     if (this.regExp.test(this.stringToAnalyze[i])) {
-  //       word += this.stringToAnalyze[i]
-  //     } else if (this.stringToAnalyze[i] === '.') {
-  //       tokens.push({ WORD: word })
-  //       word = ''
-  //       tokens.push({ DOT: '.' })
-  //     } else {
-  //       if (word.length) {
-  //         tokens.push({ WORD: word })
-  //         word = ''
-  //       }
-  //     }
-  //   }
-  //   tokens.push({ END: '' })
-  //   this.matchingTokens = tokens
-  // }
+  analyzeString() {
+    if (this.grammarType === 'WordAndDotGrammar') {
+      return wordAndDotAnalysis(this.stringToAnalyze)
+    } else if (this.grammarType === 'ArithmeticGrammar') {
+      return arithmethicAnalysis(this.stringToAnalyze)
+    }
+  }
+
   getNextToken () {
     this.activeTokenIndex++
-    this._activeToken.tokenType = Object.keys(this.matchingTokens[this.activeTokenIndex])[0]
-    this._activeToken.tokenValue = Object.values(this.matchingTokens[this.activeTokenIndex])[0]
+    this.activeToken = this.matchingTokens[this.activeTokenIndex]
+    // this._activeToken.tokenType = Object.keys(this.matchingTokens[this.activeTokenIndex])[0]
+    // this._activeToken.tokenValue = Object.values(this.matchingTokens[this.activeTokenIndex])[0]
   }
 
   getPreviousToken () {
     this.activeTokenIndex--
-    this._activeToken.tokenType = Object.keys(this.matchingTokens[this.activeTokenIndex])[0]
-    this._activeToken.tokenValue = Object.values(this.matchingTokens[this.activeTokenIndex])[0]
+    this.activeToken = this.matchingTokens[this.activeTokenIndex]
+    // this._activeToken.tokenType = Object.keys(this.matchingTokens[this.activeTokenIndex])[0]
+    // this._activeToken.tokenValue = Object.values(this.matchingTokens[this.activeTokenIndex])[0]
   }
 }
