@@ -1,9 +1,9 @@
 import { Tokenizer } from '../src/Tokenizer.js'
 import { expect } from 'chai'
 
-describe('Test WordAndDotGrammar', () => {
+describe('WordAndDotGrammar', () => {
   const tokenizer = new Tokenizer('WordAndDotGrammar', 'Detta är en mening.')
-  it('Look at initial active token', () => {
+  it('Initial active token', () => {
     expect(tokenizer.activeToken.tokenType).equal('WORD')
     expect(tokenizer.activeToken.tokenValue).equal('Detta')
   })
@@ -19,9 +19,9 @@ describe('Test WordAndDotGrammar', () => {
   })
 })
 
-describe('Test ArithmeticGrammar', () => {
+describe('ArithmeticGrammar', () => {
   const tokenizer = new Tokenizer('ArithmeticGrammar', '3 + 4')
-  it('Look at initial active token', () => {
+  it('Initial active token', () => {
     expect(tokenizer.activeToken.tokenType).equal('NUMBER')
     expect(tokenizer.activeToken.tokenValue).equal(3)
   })
@@ -34,5 +34,17 @@ describe('Test ArithmeticGrammar', () => {
     tokenizer.getPreviousToken()
     expect(tokenizer.activeToken.tokenType).equal('NUMBER')
     expect(tokenizer.activeToken.tokenValue).equal(3)
+  })
+  it('Last token is END', () => {
+    for (let i = 0; i < tokenizer.matchingTokens.length - 1; i++) {
+      tokenizer.getNextToken()
+    }
+    expect(tokenizer.activeToken.tokenType).equal('END')
+    expect(tokenizer.activeToken.tokenValue).equal('')
+  })
+  it('Try to move past last token', () => {
+    tokenizer.getNextToken()
+    expect(tokenizer.activeToken.tokenType).equal('END')
+    expect(tokenizer.activeToken.tokenValue).equal('')
   })
 })
