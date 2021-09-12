@@ -32,10 +32,15 @@ export class Tokenizer {
   }
 
   set activeToken (token) {
-    this._activeToken = this.matchingTokens[this.activeTokenIndex]
+    this._activeToken = token
   }
 
-  analyzeString() {
+  /**
+   * Analyzes a string for tokens according to the given grammar.
+   *
+   * @returns {Array} - An array of objects containing the matching tokens with token type and token value.
+   */
+  analyzeString () {
     if (this.grammarType === 'WordAndDotGrammar') {
       return wordAndDotAnalysis(this.stringToAnalyze)
     } else if (this.grammarType === 'ArithmeticGrammar') {
@@ -43,17 +48,21 @@ export class Tokenizer {
     }
   }
 
+  /**
+   * Move active token to the next matching token.
+   */
   getNextToken () {
     this.activeTokenIndex++
     this.activeToken = this.matchingTokens[this.activeTokenIndex]
-    // this._activeToken.tokenType = Object.keys(this.matchingTokens[this.activeTokenIndex])[0]
-    // this._activeToken.tokenValue = Object.values(this.matchingTokens[this.activeTokenIndex])[0]
+    // TODO: add error handling/exception when trying to access token after "END."
   }
 
+  /**
+   * Move active token to previous matching token.
+   */
   getPreviousToken () {
     this.activeTokenIndex--
     this.activeToken = this.matchingTokens[this.activeTokenIndex]
-    // this._activeToken.tokenType = Object.keys(this.matchingTokens[this.activeTokenIndex])[0]
-    // this._activeToken.tokenValue = Object.values(this.matchingTokens[this.activeTokenIndex])[0]
+  // TODO: add error handling/exception when trying to access token before first.
   }
 }

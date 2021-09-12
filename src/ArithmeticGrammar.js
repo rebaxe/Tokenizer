@@ -1,6 +1,11 @@
-const numberRegExp = /^[0-9]+(\.([0-9])+)?/
-
+/**
+ * Analyses a string for arithmethic tokens.
+ *
+ * @param {string} string - A string representing the string to be analyzed.
+ * @returns {Array} - An array containing the matching tokens.
+ */
 export function arithmethicAnalysis (string) {
+  const numberRegExp = /^[0-9]+(\.([0-9])+)?/
   const tokens = []
   let number = ''
   for (let i = 0; i < string.length; i++) {

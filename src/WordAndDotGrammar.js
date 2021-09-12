@@ -1,9 +1,11 @@
-const regExp = /^[\w|åäöÅÄÖ]+/
-
 /**
-   * Analyzes a string to find matching tokens.
-   */
- export function wordAndDotAnalysis (string) {
+ * Analyses a string for word and dot tokens.
+ *
+ * @param {string} string - A string representing the string to be analyzed.
+ * @returns {Array} - An array containing the matching tokens.
+ */
+export function wordAndDotAnalysis (string) {
+  const regExp = /^[\w|åäöÅÄÖ]+/
   const tokens = []
   let word = ''
   for (let i = 0; i < string.length; i++) {

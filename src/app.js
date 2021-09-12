@@ -1,6 +1,6 @@
-import { ArithmeticGrammarTokenizer } from './ArithmeticGrammarTokenizer.js'
+// import { ArithmeticGrammarTokenizer } from './ArithmeticGrammarTokenizer.js'
 import { Tokenizer } from './Tokenizer.js'
-import { WordAndDotGrammarTokenizer } from './WordAndDotGrammarTokenizer.js'
+// import { WordAndDotGrammarTokenizer } from './WordAndDotGrammarTokenizer.js'
 
 function tokenize (grammar, string) {
   const tokenizer = new Tokenizer(grammar, string)
