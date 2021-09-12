@@ -17,6 +17,18 @@ describe('WordAndDotGrammar', () => {
     expect(tokenizer.activeToken.tokenType).equal('WORD')
     expect(tokenizer.activeToken.tokenValue).equal('Detta')
   })
+  it('Last token is END', () => {
+    for (let i = 0; i < tokenizer.matchingTokens.length - 1; i++) {
+      tokenizer.getNextToken()
+    }
+    expect(tokenizer.activeToken.tokenType).equal('END')
+    expect(tokenizer.activeToken.tokenValue).equal('')
+  })
+  it('Try to move past last token', () => {
+    tokenizer.getNextToken()
+    expect(tokenizer.activeToken.tokenType).equal('END')
+    expect(tokenizer.activeToken.tokenValue).equal('')
+  })
 })
 
 describe('ArithmeticGrammar', () => {

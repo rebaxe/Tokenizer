@@ -22,6 +22,6 @@ export function wordAndDotAnalysis (string) {
       }
     }
   }
-  tokens.push({ okenType: 'END', tokenValue: '' })
+  tokens.push({ tokenType: 'END', tokenValue: '' })
   return tokens
 }
