@@ -29,7 +29,7 @@ export function arithmethicAnalysis (string) {
         tokens.push({ tokenType: 'NUMBER', tokenValue: Number(number) })
         number = ''
       }
-      tokens.push({ tokentype: 'MUL', tokenValue: '*' })
+      tokens.push({ tokenType: 'MUL', tokenValue: '*' })
     }
     /* else {
       if (number.length) {

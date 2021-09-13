@@ -14,7 +14,7 @@ export function wordAndDotAnalysis (string) {
     } else if (string[i] === '.') {
       tokens.push({ tokenType: 'WORD', tokenValue: word })
       word = ''
-      tokens.push({ tokentype: 'DOT', tokenValue: '.' })
+      tokens.push({ tokenType: 'DOT', tokenValue: '.' })
     } else {
       if (word.length) {
         tokens.push({ tokenType: 'WORD', tokenValue: word })

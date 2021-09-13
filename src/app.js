@@ -7,7 +7,15 @@ function tokenize (grammar, string) {
   console.log(tokenizer.activeToken)
   tokenizer.getNextToken()
   console.log(tokenizer.activeToken)
-  tokenizer.getPreviousToken()
+  tokenizer.getNextToken()
+  console.log(tokenizer.activeToken)
+  tokenizer.getNextToken()
+  console.log(tokenizer.activeToken)
+  tokenizer.getNextToken()
+  console.log(tokenizer.activeToken)
+  tokenizer.getNextToken()
+  console.log(tokenizer.activeToken)
+  tokenizer.getNextToken()
   console.log(tokenizer.activeToken)
   return tokenizer.matchingTokens
   // if (grammar === 'WordAndDotGrammar') {
@@ -24,9 +32,9 @@ function tokenize (grammar, string) {
   //   return tokenizer.matchingTokens
   // }
 }
-const tokens = tokenize('WordAndDotGrammar', 'Detta är en mening.')
+tokenize('WordAndDotGrammar', 'Detta är en mening.')
 // const tokens = tokenize('ArithmeticGrammar', '3 * 4')
-console.log(tokens)
+// console.log(tokens)
 
 // function getTokenizerType (grammar, string) {
 //   if (grammar === 'WordAndDotGrammar') {

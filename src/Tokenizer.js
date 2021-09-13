@@ -50,19 +50,27 @@ export class Tokenizer {
 
   /**
    * Move active token to the next matching token.
+   *
+   * @returns {object} The object with the current active token.
    */
   getNextToken () {
-    this.activeTokenIndex++
+    if (this.activeTokenIndex < (this.matchingTokens.length - 1)) {
+      this.activeTokenIndex++
+    }
     this.activeToken = this.matchingTokens[this.activeTokenIndex]
+    return this.activeToken
     // TODO: add error handling/exception when trying to access token after "END."
   }
 
   /**
    * Move active token to previous matching token.
+   *
+   * @returns {object} The object with the current active token.
    */
   getPreviousToken () {
     this.activeTokenIndex--
     this.activeToken = this.matchingTokens[this.activeTokenIndex]
+    return this.activeToken
   // TODO: add error handling/exception when trying to access token before first.
   }
 }
