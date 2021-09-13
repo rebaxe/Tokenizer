@@ -17,6 +17,11 @@ describe('WordAndDotGrammar', () => {
     expect(activeToken.tokenType).equal('WORD')
     expect(activeToken.tokenValue).equal('Detta')
   })
+  it('Not possible to move past first token', () => {
+    const activeToken = tokenizer.getPreviousToken()
+    expect(activeToken.tokenType).equal('WORD')
+    expect(activeToken.tokenValue).equal('Detta')
+  })
   it('Last token is END', () => {
     let activeToken
     for (let i = 0; i < tokenizer.matchingTokens.length - 1; i++) {
@@ -44,6 +49,11 @@ describe('ArithmeticGrammar', () => {
     expect(activeToken.tokenValue).equal('+')
   })
   it('Move active token to previous token', () => {
+    const activeToken = tokenizer.getPreviousToken()
+    expect(activeToken.tokenType).equal('NUMBER')
+    expect(activeToken.tokenValue).equal(3)
+  })
+  it('Not possible to move past first token', () => {
     const activeToken = tokenizer.getPreviousToken()
     expect(activeToken.tokenType).equal('NUMBER')
     expect(activeToken.tokenValue).equal(3)

@@ -54,12 +54,12 @@ export class Tokenizer {
    * @returns {object} The object with the current active token.
    */
   getNextToken () {
+    // Only allow to get next token as long as active token is not the last match.
     if (this.activeTokenIndex < (this.matchingTokens.length - 1)) {
       this.activeTokenIndex++
     }
     this.activeToken = this.matchingTokens[this.activeTokenIndex]
     return this.activeToken
-    // TODO: add error handling/exception when trying to access token after "END."
   }
 
   /**
@@ -68,9 +68,11 @@ export class Tokenizer {
    * @returns {object} The object with the current active token.
    */
   getPreviousToken () {
-    this.activeTokenIndex--
+    // Only allow to get previous token as long as active token is not the first match.
+    if (this.activeTokenIndex > 0) {
+      this.activeTokenIndex--
+    }
     this.activeToken = this.matchingTokens[this.activeTokenIndex]
     return this.activeToken
-  // TODO: add error handling/exception when trying to access token before first.
   }
 }
