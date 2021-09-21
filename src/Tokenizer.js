@@ -1,6 +1,3 @@
-import { arithmethicAnalysis } from './ArithmeticGrammar.js'
-import { wordAndDotAnalysis } from './WordAndDotGrammar.js'
-
 /**
  * Module for the type tokenizer.
  */
@@ -53,28 +50,62 @@ export class Tokenizer {
    * @returns {Array} - An array of objects containing the matching tokens with token type and token value.
    */
   analyzeString () {
-    let word = ''
-    let grammar = ''
+    
+    // let grammar = ''
     for (let i = 0; i < this._grammarType.length; i++) {
-      grammar = this._grammarType[i].tokenType
-      for (let j = 0; j < this.stringToAnalyze.length; j++) {
-        if (this._grammarType[i].tokenRegExp.test(this.stringToAnalyze[j])) {
-          word += this.stringToAnalyze[j]
-          console.log('Match')
-        } else {
-          if (word.length) {
-            this._matchingTokens.push({ tokenType: this._grammarType[i].tokenType, tokenValue: word })
-            word = ''
-          }
-          console.log('No match')
+      // grammar = this._grammarType[i]
+      this._compareToGrammarType(this._grammarType[i])
+
+      // for (let j = 0; j < this.stringToAnalyze.length; j++) {
+      //   if (grammar.tokenRegExp.test(this.stringToAnalyze[j])) {
+      //     word += this.stringToAnalyze[j]
+      //     console.log('Match')
+      //   } else {
+      //     if (word.length) {
+      //       this._matchingTokens.push({ tokenType: grammar.tokenType, tokenValue: word })
+      //       if (word.length > longestWord.length) {
+      //         longestWord = word
+      //       }
+      //       this.stringToAnalyze.slice(word.length)
+      //       word = ''
+      //     }
+      //   }
+      // }
+
+      // if (word.length) {
+      //   this._matchingTokens.push({ tokenType: this._grammarType[i].tokenType, tokenValue: word })
+      //   word = ''
+      // }
+    }
+    console.log(this._findLongestWord())
+  }
+
+  _compareToGrammarType (grammar) {
+    let word = ''
+    for (let j = 0; j < this.stringToAnalyze.length; j++) {
+      if (grammar.tokenRegExp.test(this.stringToAnalyze[j])) {
+        word += this.stringToAnalyze[j]
+        console.log('Match')
+      } else {
+        if (word.length) {
+          this._matchingTokens.push({ tokenType: grammar.tokenType, tokenValue: word })
+          word = ''
         }
       }
-      if (word.length) {
-        this._matchingTokens.push({ tokenType: this._grammarType[i].tokenType, tokenValue: word })
-        word = ''
+    }
+    if (word.length) {
+      this._matchingTokens.push({ tokenType: grammar.tokenType, tokenValue: word })
+    }
+  }
+
+  _findLongestWord () {
+    let longestWord = ''
+    for (let i = 0; i < this._matchingTokens.length; i++) {
+      if (this._matchingTokens[i].tokenValue > longestWord) {
+        longestWord = this._matchingTokens[i].tokenValue
       }
     }
-    console.log(this._matchingTokens)
+    return longestWord
   }
 
   /**
