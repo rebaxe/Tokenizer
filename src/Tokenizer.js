@@ -12,28 +12,40 @@ import { wordAndDotAnalysis } from './WordAndDotGrammar.js'
  */
 export class Tokenizer {
   constructor (grammar, string) {
-    this.stringToAnalyze = string
-    this.grammarType = grammar
-    this.matchingTokens = this.analyzeString()
-    this.activeTokenIndex = 0
-    this.activeToken = this.matchingTokens[this.activeTokenIndex]
+    this._string = string
+    this._grammarType = grammar
+    this._matchingTokens = []
+    // this._activeTokenIndex = 0
+    // this._activeToken = this.matchingTokens[this.activeTokenIndex]
+  }
+
+  get stringToAnalyze () {
+    return this._string
+  }
+
+  set stringToAnalyze (value) {
+    this._string = value
   }
 
   get identifiedMatchingTokens () {
     return this._matchingTokens
   }
 
+  set identifiedMatchingTokens (value) {
+    this._matchingTokens = value
+  }
+
   // set identifiedMatchingTokens(tokens) {
   //   this._matchingTokens = [...this.analyzeString()]
   // }
 
-  get activeToken () {
-    return this._activeToken
-  }
+  // get activeToken () {
+  //   return this._activeToken
+  // }
 
-  set activeToken (token) {
-    this._activeToken = token
-  }
+  // set activeToken (token) {
+  //   this._activeToken = token
+  // }
 
   /**
    * Analyzes a string for tokens according to the given grammar.
@@ -41,11 +53,28 @@ export class Tokenizer {
    * @returns {Array} - An array of objects containing the matching tokens with token type and token value.
    */
   analyzeString () {
-    if (this.grammarType === 'WordAndDotGrammar') {
-      return wordAndDotAnalysis(this.stringToAnalyze)
-    } else if (this.grammarType === 'ArithmeticGrammar') {
-      return arithmethicAnalysis(this.stringToAnalyze)
+    let word = ''
+    let grammar = ''
+    for (let i = 0; i < this._grammarType.length; i++) {
+      grammar = this._grammarType[i].tokenType
+      for (let j = 0; j < this.stringToAnalyze.length; j++) {
+        if (this._grammarType[i].tokenRegExp.test(this.stringToAnalyze[j])) {
+          word += this.stringToAnalyze[j]
+          console.log('Match')
+        } else {
+          if (word.length) {
+            this._matchingTokens.push({ tokenType: this._grammarType[i].tokenType, tokenValue: word })
+            word = ''
+          }
+          console.log('No match')
+        }
+      }
+      if (word.length) {
+        this._matchingTokens.push({ tokenType: this._grammarType[i].tokenType, tokenValue: word })
+        word = ''
+      }
     }
+    console.log(this._matchingTokens)
   }
 
   /**
