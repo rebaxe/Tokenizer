@@ -23,11 +23,13 @@ describe('WordAndDotGrammar', () => {
     expect(tokenizer.currentActiveToken.tokenType).equal('WORD')
     expect(tokenizer.currentActiveToken.tokenValue).equal('aa')
   })
-  // it('Move active token to previous token', () => {
-  //   const activeToken = tokenizer.getPreviousToken()
-  //   expect(activeToken.tokenType).equal('WORD')
-  //   expect(activeToken.tokenValue).equal('Detta')
-  // })
+  it('TC3', () => {
+    const tokenizer = new Tokenizer(wordAndDotGrammar, 'a.b')
+    tokenizer.analyzeString()
+    tokenizer.moveToNextToken()
+    expect(tokenizer.currentActiveToken.tokenType).equal('DOT')
+    expect(tokenizer.currentActiveToken.tokenValue).equal('.')
+  })
   // it('Not possible to move past first token', () => {
   //   const activeToken = tokenizer.getPreviousToken()
   //   expect(activeToken.tokenType).equal('WORD')

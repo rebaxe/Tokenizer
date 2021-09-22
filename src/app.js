@@ -6,8 +6,6 @@ function tokenize (grammar, string) {
   const tokenizer = new Tokenizer(grammar, string)
   tokenizer.analyzeString()
   console.log(tokenizer.identifiedMatchingTokens)
-  tokenizer.moveToNextToken()
-  console.log(tokenizer.currentActiveToken)
 }
 
 const wordAndDotGrammar = [{

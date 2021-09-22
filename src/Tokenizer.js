@@ -74,7 +74,9 @@ export class Tokenizer {
       //   word = ''
       // }
     }
-    console.log(this._findLongestWord())
+    this._addEndToken()
+    this.currentActiveToken = this.identifiedMatchingTokens[this._activeTokenIndex]
+    console.log(this.identifiedMatchingTokens)
   }
 
   _compareToGrammarType (grammar) {
@@ -82,27 +84,31 @@ export class Tokenizer {
     for (let j = 0; j < this.stringToAnalyze.length; j++) {
       if (grammar.tokenRegExp.test(this.stringToAnalyze[j])) {
         word += this.stringToAnalyze[j]
-        console.log('Match')
       } else {
         if (word.length) {
-          this._matchingTokens.push({ tokenType: grammar.tokenType, tokenValue: word })
+          this.identifiedMatchingTokens.push({ tokenType: grammar.tokenType, tokenValue: word })
           word = ''
         }
       }
     }
     if (word.length) {
-      this._matchingTokens.push({ tokenType: grammar.tokenType, tokenValue: word })
+      this.identifiedMatchingTokens.push({ tokenType: grammar.tokenType, tokenValue: word })
     }
   }
 
   _findLongestWord () {
     let longestWord = ''
-    for (let i = 0; i < this._matchingTokens.length; i++) {
-      if (this._matchingTokens[i].tokenValue > longestWord) {
-        longestWord = this._matchingTokens[i].tokenValue
+    for (let i = 0; i < this.identifiedMatchingTokens.length; i++) {
+      if (this.identifiedMatchingTokens[i].tokenValue > longestWord) {
+        longestWord = this.identifiedMatchingTokens[i].tokenValue
       }
     }
     return longestWord
+  }
+
+  _addEndToken () {
+    const endToken = { tokenType: 'END', tokenValue: '' }
+    this.identifiedMatchingTokens.push(endToken)
   }
 
   /**
@@ -116,7 +122,7 @@ export class Tokenizer {
       this._activeTokenIndex++
     }
     this.currentActiveToken = this.identifiedMatchingTokens[this._activeTokenIndex]
-    // return this.activeToken
+    // return this.currentActiveToken
   }
 
   /**
@@ -124,12 +130,12 @@ export class Tokenizer {
    *
    * @returns {object} The object with the current active token.
    */
-  getPreviousToken () {
+  moveToPreviousToken () {
     // Only allow to get previous token as long as active token is not the first match.
-    if (this.activeTokenIndex > 0) {
-      this.activeTokenIndex--
+    if (this._activeTokenIndex > 0) {
+      this._activeTokenIndex--
     }
-    this.activeToken = this.matchingTokens[this.activeTokenIndex]
-    return this.activeToken
+    this.currentActiveToken = this.identifiedMatchingTokens[this._activeTokenIndex]
+    // return this.currentActiveToken
   }
 }
