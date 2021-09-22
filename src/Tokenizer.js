@@ -12,8 +12,8 @@ export class Tokenizer {
     this._string = string
     this._grammarType = grammar
     this._matchingTokens = []
-    // this._activeTokenIndex = 0
-    // this._activeToken = this.matchingTokens[this.activeTokenIndex]
+    this._activeTokenIndex = 0
+    this._activeToken = {}
   }
 
   get stringToAnalyze () {
@@ -36,13 +36,13 @@ export class Tokenizer {
   //   this._matchingTokens = [...this.analyzeString()]
   // }
 
-  // get activeToken () {
-  //   return this._activeToken
-  // }
+  get currentActiveToken () {
+    return this._activeToken
+  }
 
-  // set activeToken (token) {
-  //   this._activeToken = token
-  // }
+  set currentActiveToken (value) {
+    this._activeToken = value
+  }
 
   /**
    * Analyzes a string for tokens according to the given grammar.
@@ -50,10 +50,7 @@ export class Tokenizer {
    * @returns {Array} - An array of objects containing the matching tokens with token type and token value.
    */
   analyzeString () {
-    
-    // let grammar = ''
     for (let i = 0; i < this._grammarType.length; i++) {
-      // grammar = this._grammarType[i]
       this._compareToGrammarType(this._grammarType[i])
 
       // for (let j = 0; j < this.stringToAnalyze.length; j++) {
@@ -113,13 +110,13 @@ export class Tokenizer {
    *
    * @returns {object} The object with the current active token.
    */
-  getNextToken () {
+  moveToNextToken () {
     // Only allow to get next token as long as active token is not the last match.
-    if (this.activeTokenIndex < (this.matchingTokens.length - 1)) {
-      this.activeTokenIndex++
+    if (this._activeTokenIndex < (this.identifiedMatchingTokens.length - 1)) {
+      this._activeTokenIndex++
     }
-    this.activeToken = this.matchingTokens[this.activeTokenIndex]
-    return this.activeToken
+    this.currentActiveToken = this.identifiedMatchingTokens[this._activeTokenIndex]
+    // return this.activeToken
   }
 
   /**

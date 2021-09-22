@@ -6,6 +6,8 @@ function tokenize (grammar, string) {
   const tokenizer = new Tokenizer(grammar, string)
   tokenizer.analyzeString()
   console.log(tokenizer.identifiedMatchingTokens)
+  tokenizer.moveToNextToken()
+  console.log(tokenizer.currentActiveToken)
 }
 
 const wordAndDotGrammar = [{
@@ -15,4 +17,17 @@ const wordAndDotGrammar = [{
   tokenType: 'DOT',
   tokenRegExp: /\./
 }]
-tokenize(wordAndDotGrammar, 'Hej svejs.')
+
+const arithmethicGrammar = [{
+  tokenType: 'NUMBER',
+  tokenRegExp: /^[0-9]+(\.([0-9])+)?/
+}, {
+  tokenType: 'ADD',
+  tokenRegExp: /^\+/
+}, {
+  tokenType: 'MUL',
+  tokenRegExp: /^\*/
+}]
+
+// tokenize(wordAndDotGrammar, 'Hej svejs.')
+tokenize(arithmethicGrammar, '3 + 4')
