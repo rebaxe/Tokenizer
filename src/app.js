@@ -7,9 +7,9 @@ function tokenize (grammar, string) {
   console.log(tokenizer.identifiedMatchingTokens)
 }
 
-// tokenize(wordAndDotGrammar, 'a.b')
 try {
-  tokenize(arithmethicGrammar, '3.0+54.1 + 4.2 5')
+  tokenize(wordAndDotGrammar, ' ')
+  // tokenize(arithmethicGrammar, '3.0+54.1 + 4.2 5')
 } catch (error) {
   console.log(error.message)
 }

@@ -46,20 +46,21 @@ export class Tokenizer {
    * @returns {Array} - An array of objects containing the matching tokens with token type and token value.
    */
   tokenize () {
-    this._analyzeString()
+    if (!this._isOnlySpaces()) {
+      this._analyzeString()
+    }
     this._addEndToken()
-    this.currentActiveToken = this.identifiedMatchingTokens[this._activeTokenIndex]
+    this._updateActiveToken()
   }
 
   _analyzeString () {
     while (this.stringToAnalyze.length > 0) {
       let newToken = ''
       let newTokenType = ''
-      let currentMatch = ''
 
       for (let j = 0; j < this._grammarType.length; j++) {
         this.stringToAnalyze = this.stringToAnalyze.trim()
-        currentMatch = this._findMatches(this._grammarType[j])
+        const currentMatch = this._findMatches(this._grammarType[j])
         if (currentMatch.length > newToken.length) {
           newToken = currentMatch
           newTokenType = this._grammarType[j].tokenType
@@ -69,6 +70,11 @@ export class Tokenizer {
       this.stringToAnalyze = this.stringToAnalyze.slice(newToken.length)
       this._addToken(newTokenType, newToken)
     }
+  }
+
+  _isOnlySpaces () {
+    const regExp = /\S/
+    return !regExp.test(this.stringToAnalyze)
   }
 
   _findMatches (grammar) {
@@ -99,6 +105,10 @@ export class Tokenizer {
     }
   }
 
+  _updateActiveToken () {
+    this.currentActiveToken = this.identifiedMatchingTokens[this._activeTokenIndex]
+  }
+
   /**
    * Move active token to the next matching token.
    */
@@ -107,7 +117,7 @@ export class Tokenizer {
     if (this._activeTokenIndex < (this.identifiedMatchingTokens.length - 1)) {
       this._activeTokenIndex++
     }
-    this.currentActiveToken = this.identifiedMatchingTokens[this._activeTokenIndex]
+    this._updateActiveToken()
   }
 
   /**
@@ -118,6 +128,6 @@ export class Tokenizer {
     if (this._activeTokenIndex > 0) {
       this._activeTokenIndex--
     }
-    this.currentActiveToken = this.identifiedMatchingTokens[this._activeTokenIndex]
+    this._updateActiveToken()
   }
 }
