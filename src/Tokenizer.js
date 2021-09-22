@@ -32,10 +32,6 @@ export class Tokenizer {
     this._matchingTokens = value
   }
 
-  // set identifiedMatchingTokens(tokens) {
-  //   this._matchingTokens = [...this.analyzeString()]
-  // }
-
   get currentActiveToken () {
     return this._activeToken
   }
@@ -49,61 +45,47 @@ export class Tokenizer {
    *
    * @returns {Array} - An array of objects containing the matching tokens with token type and token value.
    */
-  analyzeString () {
-    for (let i = 0; i < this._grammarType.length; i++) {
-      this._compareToGrammarType(this._grammarType[i])
-
-      // for (let j = 0; j < this.stringToAnalyze.length; j++) {
-      //   if (grammar.tokenRegExp.test(this.stringToAnalyze[j])) {
-      //     word += this.stringToAnalyze[j]
-      //     console.log('Match')
-      //   } else {
-      //     if (word.length) {
-      //       this._matchingTokens.push({ tokenType: grammar.tokenType, tokenValue: word })
-      //       if (word.length > longestWord.length) {
-      //         longestWord = word
-      //       }
-      //       this.stringToAnalyze.slice(word.length)
-      //       word = ''
-      //     }
-      //   }
-      // }
-
-      // if (word.length) {
-      //   this._matchingTokens.push({ tokenType: this._grammarType[i].tokenType, tokenValue: word })
-      //   word = ''
-      // }
-    }
+  tokenize () {
+    this._analyzeString()
     this._addEndToken()
     this.currentActiveToken = this.identifiedMatchingTokens[this._activeTokenIndex]
-    console.log(this.identifiedMatchingTokens)
   }
 
-  _compareToGrammarType (grammar) {
-    let word = ''
-    for (let j = 0; j < this.stringToAnalyze.length; j++) {
-      if (grammar.tokenRegExp.test(this.stringToAnalyze[j])) {
-        word += this.stringToAnalyze[j]
-      } else {
-        if (word.length) {
-          this.identifiedMatchingTokens.push({ tokenType: grammar.tokenType, tokenValue: word })
-          word = ''
+  _analyzeString () {
+    while (this.stringToAnalyze.length > 0) {
+      let newToken = ''
+      let newTokenType = ''
+      let currentMatch = ''
+
+      for (let j = 0; j < this._grammarType.length; j++) {
+        this.stringToAnalyze = this.stringToAnalyze.trim()
+        currentMatch = this._findMatches(this._grammarType[j])
+        if (currentMatch.length > newToken.length) {
+          newToken = currentMatch
+          newTokenType = this._grammarType[j].tokenType
         }
       }
-    }
-    if (word.length) {
-      this.identifiedMatchingTokens.push({ tokenType: grammar.tokenType, tokenValue: word })
+      this._handleNoMatch(newToken)
+      this.stringToAnalyze = this.stringToAnalyze.slice(newToken.length)
+      this._addToken(newTokenType, newToken)
     }
   }
 
-  _findLongestWord () {
-    let longestWord = ''
-    for (let i = 0; i < this.identifiedMatchingTokens.length; i++) {
-      if (this.identifiedMatchingTokens[i].tokenValue > longestWord) {
-        longestWord = this.identifiedMatchingTokens[i].tokenValue
+  _findMatches (grammar) {
+    let match = ''
+    for (let i = 0; i < this.stringToAnalyze.length; i++) {
+      const currentCharacter = this.stringToAnalyze[i]
+      if (grammar.tokenRegExp.test(currentCharacter)) {
+        match += currentCharacter
+      } else {
+        return match
       }
     }
-    return longestWord
+    return match
+  }
+
+  _addToken (type, value) {
+    this.identifiedMatchingTokens.push({ tokenType: type, tokenValue: value })
   }
 
   _addEndToken () {
@@ -111,10 +93,14 @@ export class Tokenizer {
     this.identifiedMatchingTokens.push(endToken)
   }
 
+  _handleNoMatch (match) {
+    if (match.length === 0) {
+      throw new Error('Found tokens that did not match')
+    }
+  }
+
   /**
    * Move active token to the next matching token.
-   *
-   * @returns {object} The object with the current active token.
    */
   moveToNextToken () {
     // Only allow to get next token as long as active token is not the last match.
@@ -122,13 +108,10 @@ export class Tokenizer {
       this._activeTokenIndex++
     }
     this.currentActiveToken = this.identifiedMatchingTokens[this._activeTokenIndex]
-    // return this.currentActiveToken
   }
 
   /**
    * Move active token to previous matching token.
-   *
-   * @returns {object} The object with the current active token.
    */
   moveToPreviousToken () {
     // Only allow to get previous token as long as active token is not the first match.
@@ -136,6 +119,5 @@ export class Tokenizer {
       this._activeTokenIndex--
     }
     this.currentActiveToken = this.identifiedMatchingTokens[this._activeTokenIndex]
-    // return this.currentActiveToken
   }
 }

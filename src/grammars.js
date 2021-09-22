@@ -8,8 +8,7 @@ export const wordAndDotGrammar = [{
 
 export const arithmethicGrammar = [{
   tokenType: 'NUMBER',
-  tokenRegExp: /([0-9]+\.?[0-9]*|\.[0-9]+)$/
-  // tokenRegExp: /^[0-9]+(\.([0-9])+)?/
+  tokenRegExp: /^.*[0-9]|\./
 }, {
   tokenType: 'ADD',
   tokenRegExp: /^\+/

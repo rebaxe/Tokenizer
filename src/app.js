@@ -3,9 +3,13 @@ import { wordAndDotGrammar, arithmethicGrammar } from './grammars.js'
 
 function tokenize (grammar, string) {
   const tokenizer = new Tokenizer(grammar, string)
-  tokenizer.analyzeString()
+  tokenizer.tokenize()
   console.log(tokenizer.identifiedMatchingTokens)
 }
 
-// tokenize(wordAndDotGrammar, 'Hej svejs.')
-tokenize(arithmethicGrammar, '3 + 4')
+// tokenize(wordAndDotGrammar, 'a.b')
+try {
+  tokenize(arithmethicGrammar, '3.0+54.1 + 4.2 5')
+} catch (error) {
+  console.log(error.message)
+}
