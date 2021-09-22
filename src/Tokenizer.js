@@ -8,6 +8,12 @@
  * @class
  */
 export class Tokenizer {
+  /**
+   * Creates an instance of Tokenizer.
+   *
+   * @param {Array<object>} grammar An array of objects containing grammar definitions.
+   * @param {string} string The string to be tokenized.
+   */
   constructor (grammar, string) {
     this._string = string
     this._grammarType = grammar
@@ -16,34 +22,65 @@ export class Tokenizer {
     this._activeToken = {}
   }
 
+  /**
+   * Gets stringToAnalyze.
+   *
+   * @returns {string} The string to be analyzed.
+   * @memberof Tokenizer
+   */
   get stringToAnalyze () {
     return this._string
   }
 
+  /**
+   * Sets stringToAnalyze.
+   *
+   * @memberof Tokenizer
+   */
   set stringToAnalyze (value) {
     this._string = value
   }
 
-  get identifiedMatchingTokens () {
+  /**
+   * Gets matchingTokenSet.
+   *
+   * @returns {Array<object>} An array containing matching tokens.
+   * @memberof Tokenizer
+   */
+  get matchingTokenSet () {
     return this._matchingTokens
   }
 
-  set identifiedMatchingTokens (value) {
+  /**
+   * Sets matchingTokenSet.
+   *
+   * @memberof Tokenizer
+   */
+  set matchingTokenSet (value) {
     this._matchingTokens = value
   }
 
+  /**
+   * Gets currentActiveToken.
+   *
+   * @returns {object} An object representing the current active token.
+   * @memberof Tokenizer
+   */
   get currentActiveToken () {
     return this._activeToken
   }
 
+  /**
+   * Sets currentActiveToken.
+   *
+   * @memberof Tokenizer
+   */
   set currentActiveToken (value) {
     this._activeToken = value
   }
 
   /**
-   * Analyzes a string for tokens according to the given grammar.
-   *
-   * @returns {Array} - An array of objects containing the matching tokens with token type and token value.
+   * Initializes tokenization.
    */
   tokenize () {
     if (!this._isOnlySpaces()) {
@@ -53,6 +90,9 @@ export class Tokenizer {
     this._updateActiveToken()
   }
 
+  /**
+   * Analyzes a string for matching token according to given grammar.
+   */
   _analyzeString () {
     while (this.stringToAnalyze.length > 0) {
       let newToken = ''
@@ -72,11 +112,23 @@ export class Tokenizer {
     }
   }
 
+  /**
+   * Checks if a string contains only white spaces.
+   *
+   * @returns {boolean} Represents if a string contains only white spaces or not.
+   */
   _isOnlySpaces () {
     const regExp = /\S/
     return !regExp.test(this.stringToAnalyze)
   }
 
+  /**
+   * Checks if the string matches the current grammar.
+   *
+   * @param {object} grammar An object representing the current grammar.
+   *
+   * @returns {string} a string representing the matching string.
+   */
   _findMatches (grammar) {
     let match = ''
     for (let i = 0; i < this.stringToAnalyze.length; i++) {
@@ -90,38 +142,56 @@ export class Tokenizer {
     return match
   }
 
+  /**
+   * Adds a token to found matching tokens.
+   *
+   * @param {string} type A string representing the token type.
+   * @param {string} value A string representing the token value.
+   */
   _addToken (type, value) {
-    this.identifiedMatchingTokens.push({ tokenType: type, tokenValue: value })
+    this.matchingTokenSet.push({ tokenType: type, tokenValue: value })
   }
 
+  /**
+   * Adds an end token.
+   */
   _addEndToken () {
     const endToken = { tokenType: 'END', tokenValue: '' }
-    this.identifiedMatchingTokens.push(endToken)
+    this.matchingTokenSet.push(endToken)
   }
 
+  /**
+   * Throws an error if no match was found.
+   *
+   * @param {string} match A string representing the match.
+   * @throws {Error}
+   */
   _handleNoMatch (match) {
     if (match.length === 0) {
       throw new Error('Found tokens that did not match')
     }
   }
 
+  /**
+   * Updates which token that is currently active.
+   */
   _updateActiveToken () {
-    this.currentActiveToken = this.identifiedMatchingTokens[this._activeTokenIndex]
+    this.currentActiveToken = this.matchingTokenSet[this._activeTokenIndex]
   }
 
   /**
-   * Move active token to the next matching token.
+   * Moves active token to the next matching token.
    */
   moveToNextToken () {
     // Only allow to get next token as long as active token is not the last match.
-    if (this._activeTokenIndex < (this.identifiedMatchingTokens.length - 1)) {
+    if (this._activeTokenIndex < (this.matchingTokenSet.length - 1)) {
       this._activeTokenIndex++
     }
     this._updateActiveToken()
   }
 
   /**
-   * Move active token to previous matching token.
+   * Moves active token to previous matching token.
    */
   moveToPreviousToken () {
     // Only allow to get previous token as long as active token is not the first match.

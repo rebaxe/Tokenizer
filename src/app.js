@@ -1,14 +1,20 @@
 import { Tokenizer } from './Tokenizer.js'
 import { wordAndDotGrammar, arithmethicGrammar } from './grammars.js'
 
-function tokenize (grammar, string) {
+/**
+ * A function to run the program.
+ *
+ * @param {Array<object>} grammar An array containing objects with grammar definitions.
+ * @param {string} string A string to tokenize.
+ */
+function runTokenizer (grammar, string) {
   const tokenizer = new Tokenizer(grammar, string)
   tokenizer.tokenize()
-  console.log(tokenizer.identifiedMatchingTokens)
+  console.log(tokenizer.matchingTokenSet)
 }
 
 try {
-  tokenize(wordAndDotGrammar, ' ')
+  runTokenizer(wordAndDotGrammar, ' ')
   // tokenize(arithmethicGrammar, '3.0+54.1 + 4.2 5')
 } catch (error) {
   console.log(error.message)
