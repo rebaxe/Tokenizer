@@ -30,24 +30,31 @@ describe('WordAndDotGrammar', () => {
     expect(tokenizer.currentActiveToken.tokenType).equal('DOT')
     expect(tokenizer.currentActiveToken.tokenValue).equal('.')
   })
-  // it('Not possible to move past first token', () => {
-  //   const activeToken = tokenizer.getPreviousToken()
-  //   expect(activeToken.tokenType).equal('WORD')
-  //   expect(activeToken.tokenValue).equal('Detta')
-  // })
-  // it('Last token is END', () => {
-  //   let activeToken
-  //   for (let i = 0; i < tokenizer.matchingTokens.length - 1; i++) {
-  //     activeToken = tokenizer.getNextToken()
-  //   }
-  //   expect(activeToken.tokenType).equal('END')
-  //   expect(activeToken.tokenValue).equal('')
-  // })
-  // it('Not possible move past last token', () => {
-  //   const activeToken = tokenizer.getNextToken()
-  //   expect(activeToken.tokenType).equal('END')
-  //   expect(activeToken.tokenValue).equal('')
-  // })
+  it('TC4', () => {
+    const tokenizer = new Tokenizer(wordAndDotGrammar, 'a.b')
+    tokenizer.analyzeString()
+    tokenizer.moveToNextToken()
+    tokenizer.moveToNextToken()
+    expect(tokenizer.currentActiveToken.tokenType).equal('WORD')
+    expect(tokenizer.currentActiveToken.tokenValue).equal('b')
+  })
+  it('TC5', () => {
+    const tokenizer = new Tokenizer(wordAndDotGrammar, 'aa. b')
+    tokenizer.analyzeString()
+    tokenizer.moveToNextToken()
+    tokenizer.moveToNextToken()
+    expect(tokenizer.currentActiveToken.tokenType).equal('WORD')
+    expect(tokenizer.currentActiveToken.tokenValue).equal('b')
+  })
+  it('TC6', () => {
+    const tokenizer = new Tokenizer(wordAndDotGrammar, 'a. b')
+    tokenizer.analyzeString()
+    tokenizer.moveToNextToken()
+    tokenizer.moveToNextToken()
+    tokenizer.moveToPreviousToken()
+    expect(tokenizer.currentActiveToken.tokenType).equal('DOT')
+    expect(tokenizer.currentActiveToken.tokenValue).equal('.')
+  })
 })
 
 // describe('ArithmeticGrammar', () => {
