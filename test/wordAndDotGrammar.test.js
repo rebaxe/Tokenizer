@@ -1,8 +1,8 @@
 import { Tokenizer } from '../src/Tokenizer.js'
 import { expect } from 'chai'
-import { wordAndDotGrammar } from '../src/grammars.js'
+import { wordAndDotGrammar } from './testGrammars.js'
 
-describe('WordAndDotGrammar', () => {
+describe('Word-And-Dot Grammar Tests', () => {
   it('TC1 - Tokenizer should identify WORD', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, 'a')
     tokenizer.tokenize()
@@ -76,6 +76,6 @@ describe('WordAndDotGrammar', () => {
   })
   it('TC11 - Tokenizer should throw error when hitting unvalid tokens', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, '!')
-    expect(() => tokenizer.tokenize()).to.throw('Found tokens that did not match')
+    expect(() => tokenizer.tokenize()).to.throw(Error, 'Found tokens that did not match')
   })
 })

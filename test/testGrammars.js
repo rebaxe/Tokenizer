@@ -6,7 +6,7 @@ export const wordAndDotGrammar = [{
   tokenRegExp: /\./
 }]
 
-export const arithmethicGrammar = [{
+export const arithmeticGrammar = [{
   tokenType: 'NUMBER',
   tokenRegExp: /^.*[0-9]|\./
 }, {
