@@ -14,7 +14,7 @@ function runTokenizer (grammar, string) {
 }
 
 try {
-  runTokenizer(wordAndDotGrammar, ' ')
+  runTokenizer(wordAndDotGrammar, 'aa a.b')
   // tokenize(arithmethicGrammar, '3.0+54.1 + 4.2 5')
 } catch (error) {
   console.log(error.message)

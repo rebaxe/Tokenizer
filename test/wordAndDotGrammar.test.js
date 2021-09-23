@@ -1,29 +1,29 @@
 import { Tokenizer } from '../src/Tokenizer.js'
 import { expect } from 'chai'
-import { wordAndDotGrammar, arithmethicGrammar } from '../src/grammars.js'
+import { wordAndDotGrammar } from '../src/grammars.js'
 
 describe('WordAndDotGrammar', () => {
-  it('TC1', () => {
+  it('TC1 - Tokenizer should identify WORD', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, 'a')
     tokenizer.tokenize()
     expect(tokenizer.currentActiveToken.tokenType).equal('WORD')
     expect(tokenizer.currentActiveToken.tokenValue).equal('a')
   })
-  it('TC2', () => {
+  it('TC2 - Tokenizer should move to next token and identify WORD', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, 'a aa')
     tokenizer.tokenize()
     tokenizer.moveToNextToken()
     expect(tokenizer.currentActiveToken.tokenType).equal('WORD')
     expect(tokenizer.currentActiveToken.tokenValue).equal('aa')
   })
-  it('TC3', () => {
+  it('TC3 - Tokenizer should move to next token and identify DOT', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, 'a.b')
     tokenizer.tokenize()
     tokenizer.moveToNextToken()
     expect(tokenizer.currentActiveToken.tokenType).equal('DOT')
     expect(tokenizer.currentActiveToken.tokenValue).equal('.')
   })
-  it('TC4', () => {
+  it('TC4 - Tokenizer should move two steps forward and identify WORD', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, 'a.b')
     tokenizer.tokenize()
     tokenizer.moveToNextToken()
@@ -31,7 +31,7 @@ describe('WordAndDotGrammar', () => {
     expect(tokenizer.currentActiveToken.tokenType).equal('WORD')
     expect(tokenizer.currentActiveToken.tokenValue).equal('b')
   })
-  it('TC5', () => {
+  it('TC5 - Tokenizer should move two steps forward and handle white space', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, 'aa. b')
     tokenizer.tokenize()
     tokenizer.moveToNextToken()
@@ -39,7 +39,7 @@ describe('WordAndDotGrammar', () => {
     expect(tokenizer.currentActiveToken.tokenType).equal('WORD')
     expect(tokenizer.currentActiveToken.tokenValue).equal('b')
   })
-  it('TC6', () => {
+  it('TC6 - Tokenizer should move two steps forward, one step backwards and identify DOT', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, 'a. b')
     tokenizer.tokenize()
     tokenizer.moveToNextToken()
@@ -48,73 +48,34 @@ describe('WordAndDotGrammar', () => {
     expect(tokenizer.currentActiveToken.tokenType).equal('DOT')
     expect(tokenizer.currentActiveToken.tokenValue).equal('.')
   })
-  it('TC7', () => {
+  it('TC7 - Tokenizer should handle an empty string', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, '')
     tokenizer.tokenize()
     expect(tokenizer.currentActiveToken.tokenType).equal('END')
     expect(tokenizer.currentActiveToken.tokenValue).equal('')
   })
-  it('TC8', () => {
+  it('TC8 - Tokenizer should handle a string with only white spaces', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, ' ')
     tokenizer.tokenize()
     expect(tokenizer.currentActiveToken.tokenType).equal('END')
     expect(tokenizer.currentActiveToken.tokenValue).equal('')
   })
-  it('TC9', () => {
+  it('TC9 - Tokenizer should have END as last token', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, 'a')
     tokenizer.tokenize()
     tokenizer.moveToNextToken()
     expect(tokenizer.currentActiveToken.tokenType).equal('END')
     expect(tokenizer.currentActiveToken.tokenValue).equal('')
   })
-  it('TC10', () => {
+  it('TC10 - Tokenizer should not move past first token', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, 'a')
     tokenizer.tokenize()
     tokenizer.moveToPreviousToken()
     expect(tokenizer.currentActiveToken.tokenType).equal('WORD')
     expect(tokenizer.currentActiveToken.tokenValue).equal('a')
   })
-  it('TC11', () => {
+  it('TC11 - Tokenizer should throw error when hitting unvalid tokens', () => {
     const tokenizer = new Tokenizer(wordAndDotGrammar, '!')
     expect(() => tokenizer.tokenize()).to.throw('Found tokens that did not match')
-  })
-})
-
-describe('ArithmeticGrammar', () => {
-  it('TC12', () => {
-    const tokenizer = new Tokenizer(arithmethicGrammar, '3')
-    tokenizer.tokenize()
-    expect(tokenizer.currentActiveToken.tokenType).equal('NUMBER')
-    expect(tokenizer.currentActiveToken.tokenValue).equal('3')
-  })
-  it('TC13', () => {
-    const tokenizer = new Tokenizer(arithmethicGrammar, '3.14')
-    tokenizer.tokenize()
-    expect(tokenizer.currentActiveToken.tokenType).equal('NUMBER')
-    expect(tokenizer.currentActiveToken.tokenValue).equal('3.14')
-  })
-  it('TC14', () => {
-    const tokenizer = new Tokenizer(arithmethicGrammar, '3 + 54 * 4')
-    tokenizer.tokenize()
-    tokenizer.moveToNextToken()
-    tokenizer.moveToNextToken()
-    tokenizer.moveToNextToken()
-    expect(tokenizer.currentActiveToken.tokenType).equal('MUL')
-    expect(tokenizer.currentActiveToken.tokenValue).equal('*')
-  })
-  it('TC15', () => {
-    const tokenizer = new Tokenizer(arithmethicGrammar, '3+5 # 4')
-    expect(() => tokenizer.tokenize()).to.throw('Found tokens that did not match')
-  })
-  it('TC16', () => {
-    const tokenizer = new Tokenizer(arithmethicGrammar, '3.0+54.1 + 4.2')
-    tokenizer.tokenize()
-    tokenizer.moveToNextToken()
-    tokenizer.moveToPreviousToken()
-    tokenizer.moveToNextToken()
-    tokenizer.moveToNextToken()
-    tokenizer.moveToNextToken()
-    expect(tokenizer.currentActiveToken.tokenType).equal('ADD')
-    expect(tokenizer.currentActiveToken.tokenValue).equal('+')
   })
 })

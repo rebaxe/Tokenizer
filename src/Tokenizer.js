@@ -95,20 +95,20 @@ export class Tokenizer {
    */
   _analyzeString () {
     while (this.stringToAnalyze.length > 0) {
-      let newToken = ''
+      let newTokenValue = ''
       let newTokenType = ''
 
-      for (let j = 0; j < this._grammarType.length; j++) {
+      for (let i = 0; i < this._grammarType.length; i++) {
         this.stringToAnalyze = this.stringToAnalyze.trim()
-        const currentMatch = this._findMatches(this._grammarType[j])
-        if (currentMatch.length > newToken.length) {
-          newToken = currentMatch
-          newTokenType = this._grammarType[j].tokenType
+        const currentMatch = this._findMatches(this._grammarType[i])
+        if (currentMatch.length > newTokenValue.length) {
+          newTokenValue = currentMatch
+          newTokenType = this._grammarType[i].tokenType
         }
       }
-      this._handleNoMatch(newToken)
-      this.stringToAnalyze = this.stringToAnalyze.slice(newToken.length)
-      this._addToken(newTokenType, newToken)
+      this._handleNoMatch(newTokenValue)
+      this.stringToAnalyze = this.stringToAnalyze.slice(newTokenValue.length)
+      this._addToken(newTokenType, newTokenValue)
     }
   }
 
@@ -132,9 +132,8 @@ export class Tokenizer {
   _findMatches (grammar) {
     let match = ''
     for (let i = 0; i < this.stringToAnalyze.length; i++) {
-      const currentCharacter = this.stringToAnalyze[i]
-      if (grammar.tokenRegExp.test(currentCharacter)) {
-        match += currentCharacter
+      if (grammar.tokenRegExp.test(this.stringToAnalyze[i])) {
+        match += this.stringToAnalyze[i]
       } else {
         return match
       }
