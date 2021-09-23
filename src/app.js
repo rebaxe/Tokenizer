@@ -1,5 +1,6 @@
 import { Tokenizer } from './Tokenizer.js'
 import { wordAndDotGrammar, arithmeticGrammar } from '../test/testGrammars.js'
+import { Grammar } from './Grammar.js'
 
 /**
  * A function to run the program.
@@ -8,8 +9,9 @@ import { wordAndDotGrammar, arithmeticGrammar } from '../test/testGrammars.js'
  * @param {string} string A string representing the string to be tokenized.
  * @returns {Tokenizer} Returns an instance of the type Tokenizer.
  */
-function runTokenizer (grammar, string) {
-  return new Tokenizer(grammar, string)
+export function runTokenizer (grammar, string) {
+  const grammars = Array.from(grammar, g => new Grammar(g))
+  return new Tokenizer(grammars, string)
 }
 
 try {

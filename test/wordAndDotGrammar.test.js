@@ -1,10 +1,12 @@
 import { Tokenizer } from '../src/Tokenizer.js'
 import { expect } from 'chai'
 import { wordAndDotGrammar } from './testGrammars.js'
+import { runTokenizer } from '../src/app.js'
 
 describe('Word-And-Dot Grammar Tests', () => {
   it('TC1 - Tokenizer should identify WORD', () => {
-    const tokenizer = new Tokenizer(wordAndDotGrammar, 'a')
+    const tokenizer = runTokenizer(wordAndDotGrammar, 'a')
+    // const tokenizer = new Tokenizer(wordAndDotGrammar, 'a')
     tokenizer.tokenize()
     expect(tokenizer.currentActiveToken.tokenType).equal('WORD')
     expect(tokenizer.currentActiveToken.tokenValue).equal('a')
