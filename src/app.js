@@ -10,14 +10,18 @@ import { Grammar } from './Grammar.js'
  * @returns {Tokenizer} Returns an instance of the type Tokenizer.
  */
 export function runTokenizer (grammar, string) {
-  const grammars = Array.from(grammar, g => new Grammar(g))
-  return new Tokenizer(grammars, string)
+    const grammars = Array.from(grammar, g => new Grammar(g))
+    return new Tokenizer(grammars, string)
 }
 
-try {
-  const tokenizer = runTokenizer(wordAndDotGrammar, 'aa a.b')
-  tokenizer.tokenize()
-  console.log(tokenizer.matchingTokenSet)
-} catch (error) {
-  console.log(error.message)
-}
+  // const tokenizer = runTokenizer(wordAndDotGrammar, 'aa a.b')
+  // tokenizer.tokenize()
+  // console.log(tokenizer.matchingTokenSet)
+
+// try {
+//   const tokenizer = runTokenizer(wordAndDotGrammar, 'aa a.b')
+//   tokenizer.tokenize()
+//   console.log(tokenizer.matchingTokenSet)
+// } catch (error) {
+//   console.log(error.message)
+// }

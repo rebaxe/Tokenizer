@@ -16,3 +16,23 @@ export const arithmeticGrammar = [{
   tokenType: 'MUL',
   tokenRegExp: /^\*/
 }]
+
+export const advancedArithmeticGrammar = [{
+  tokenType: 'NUMBER',
+  tokenRegExp: /^.*[0-9]|\./
+}, {
+  tokenType: 'ADD',
+  tokenRegExp: /^\+/
+}, {
+  tokenType: 'SUB',
+  tokenRegExp: /^\-/
+}, {
+  tokenType: 'MUL',
+  tokenRegExp: /^\*/
+}, {
+  tokenType: 'DIV',
+  tokenRegExp: /^\//
+}, {
+  tokenType: 'PAR',
+  tokenRegExp: /^\(|\)/
+}]

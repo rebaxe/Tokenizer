@@ -1,4 +1,3 @@
-import { Tokenizer } from '../src/Tokenizer.js'
 import { expect } from 'chai'
 import { arithmeticGrammar } from './testGrammars.js'
 import { runTokenizer } from '../src/app.js'
