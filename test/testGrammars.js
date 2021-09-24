@@ -36,3 +36,12 @@ export const advancedArithmeticGrammar = [{
   tokenType: 'PAR',
   tokenRegExp: /^\(|\)/
 }]
+
+export const maximalMunch = [{
+  tokenType: 'NUMBER',
+  tokenRegExp: /^.*[0-9]/
+}, {
+  tokenType: 'FLOAT',
+  tokenRegExp: /^.*[0-9]|\./
+}]
+

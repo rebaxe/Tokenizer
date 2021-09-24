@@ -50,13 +50,13 @@ export class Tokenizer {
 
   tokenize () {
     if (!this._isOnlySpaces()) {
-      this._analyzeString()
+      this._analyzeStringForTokens()
     }
     this._addEndToken()
     this._updateActiveToken()
   }
 
-  _analyzeString () {
+  _analyzeStringForTokens () {
     while (this.stringToAnalyze.length > 0) {
       let newTokenValue = ''
       let newTokenType = ''
@@ -64,7 +64,7 @@ export class Tokenizer {
       for (let i = 0; i < this._grammarType.length; i++) {
         this.stringToAnalyze = this.stringToAnalyze.trim()
         const currentMatch = this._findMatches(this._grammarType[i])
-        if (currentMatch.length > newTokenValue.length) {
+        if (this._applyMaximalMunch(currentMatch, newTokenValue)) {
           newTokenValue = currentMatch
           newTokenType = this._grammarType[i].tokenType
         }
@@ -73,6 +73,10 @@ export class Tokenizer {
       this.stringToAnalyze = this.stringToAnalyze.slice(newTokenValue.length)
       this._addToken(newTokenType, newTokenValue)
     }
+  }
+
+  _applyMaximalMunch(currentLongestMatch, newMatch) {
+     return currentLongestMatch.length > newMatch.length
   }
 
   _isOnlySpaces () {
