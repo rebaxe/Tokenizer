@@ -10,20 +10,20 @@ describe('Advanced Arithmetic Grammar Tests', () => {
     expect(tokenizer.currentActiveToken.tokenType).equal('SUB')
     expect(tokenizer.currentActiveToken.tokenValue).equal('-')
   })
-  it('TC18 - Tokenizer should identify PAR', () => {
+  it('TC18 - Tokenizer should identify LEFTPAR', () => {
     const tokenizer = runTokenizer(advancedArithmeticGrammar, '(3 + 4) * 54')
     tokenizer.tokenize()
-    expect(tokenizer.currentActiveToken.tokenType).equal('PAR')
+    expect(tokenizer.currentActiveToken.tokenType).equal('LEFTPAR')
     expect(tokenizer.currentActiveToken.tokenValue).equal('(')
   })
-  it('TC19 - Tokenizer should move four steps forward and identify PAR', () => {
+  it('TC19 - Tokenizer should move four steps forward and identify RIGHTPAR', () => {
     const tokenizer = runTokenizer(advancedArithmeticGrammar, '(3 + 4) * 54')
     tokenizer.tokenize()
     tokenizer.moveToNextToken()
     tokenizer.moveToNextToken()
     tokenizer.moveToNextToken()
     tokenizer.moveToNextToken()
-    expect(tokenizer.currentActiveToken.tokenType).equal('PAR')
+    expect(tokenizer.currentActiveToken.tokenType).equal('RIGHTPAR')
     expect(tokenizer.currentActiveToken.tokenValue).equal(')')
   })
   it('TC20 - Tokenizer should identify DIV', () => {

@@ -33,8 +33,11 @@ export const advancedArithmeticGrammar = [{
   tokenType: 'DIV',
   tokenRegExp: /^\//
 }, {
-  tokenType: 'PAR',
-  tokenRegExp: /^\(|\)/
+  tokenType: 'LEFTPAR',
+  tokenRegExp: /^\(/
+}, {
+  tokenType: 'RIGHTPAR',
+  tokenRegExp: /^\)/
 }]
 
 export const maximalMunch = [{

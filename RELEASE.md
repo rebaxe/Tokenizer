@@ -17,19 +17,19 @@
     - [ ] Reflektion är skriven
   - [x] Jag eftersträvar med denna inlämning högre betyg (C-B) och anser mig uppfylla alla extra krav för detta. 
     - [x] Samtliga testfall är skrivna
-    - [ ] Egna testfall för Maximal munch och kantfall
+    - [x] Egna testfall för Maximal munch och kantfall
     - [x] Testfall är automatiserade
     - [ ] Det finns en tydlig beskrivning i hur modulen skall användas (i git)
     - [ ] Kodkvalitetskraven är varierade 
-  - [ ] Jag eftersträvar med denna inlämning högsta betyg (A) 
+  - [x] Jag eftersträvar med denna inlämning högsta betyg (A) 
 
 Förtydligande: Examinator kommer sätta betyg oberoende på vad ni anser. 
 
 ## Återanvändning
-Beskriv hur du anpassat din kod och instruktioner för att någon annan programmerare skall kunna använda din tokenizer. Om du skrivit instruktioner för din användare länka till dessa. Om inte beskriv här hur någon skall göra för att använda din kod med sin egen grammatik. 
+*Beskriv hur du anpassat din kod och instruktioner för att någon annan programmerare skall kunna använda din tokenizer. Om du skrivit instruktioner för din användare länka till dessa. Om inte beskriv här hur någon skall göra för att använda din kod med sin egen grammatik.*
 
 ## Beskrivning av min kod
-Beskriv din kod på en hög abstraktionsnivå. En kort beskrivning av dina viktigaste klasser och metoder. Skapa gärna ett klassdiagram som bild. 
+*Beskriv din kod på en hög abstraktionsnivå. En kort beskrivning av dina viktigaste klasser och metoder. Skapa gärna ett klassdiagram som bild.*
 
 Min kod använder sig av tre klasser: Tokenizer, Token och Grammar. 
 Tokenizer är själv tokeniseraren till vilken det skickas in två argument - en array med Grammar-objekt och en sträng. Tokenizer kommer sedan gå igenom strängen och jämföra den emot de reguljära uttryck som givits i grammatiken. Utefter de matchningar som finns i strängen skapas då instanser av Token som sedan lagras i en array.
@@ -52,7 +52,22 @@ Lista de enskilda testfallen. **Fetmarkera** sådant som du själv fyllt i. En r
 
 | Namn      | Grammatik | Sträng | Sekvens | Förväntat Aktivt Token | PASS/FAIL |
 | --------- | --------- | ------ | ------- | ------------ | --------- |
-|           |           |        |         |              |           |
+|  TC1      |wordAndDot |"a"     |[]       | WORD("a")    | PASS      |
+|  TC2      |wordAndDot |"a aa"  |[>]      | WORD("aa")   | PASS      |
+|  TC3      |wordAndDot |"a.b"   |[>]      | DOT(".")     | PASS      |
+|  TC4      |wordAndDot |"a.b"   |[>>]     | **WORD("b")**| PASS      |
+|  TC5      |wordAndDot |"aa. b" |**[>>>]**| WORD("b")    | PASS      |
+|  TC6      |wordAndDot |"a .b"  |[>><]    | DOT(".")     | PASS      |
+|  TC7      |wordAndDot |""      |[]       | END          | PASS      |
+|  TC8      |wordAndDot |" "     |[]       | **END**      | PASS      |
+|  TC9      |wordAndDot |"a"     |**[>]**  | END          | PASS      |
+|  TC10     |wordAndDot |"a"     |[<]      | **WORD("a")**| PASS      |
+|  TC11     |wordAndDot |"!"     |[]       | Error        | PASS      |
+|  TC12     |arithmetic |"3"     |[]       | NUMBER("3")  | PASS      |
+|  TC13     |arithmetic |"3.14"  |[]       | NUMBER("3.14")| PASS      |
+|  TC14     |arithmetic |"3 + 54 * 4"|[>>>]| MUL("*")     | PASS      |
+|  TC15     |arithmetic |"3+5 # 4"|[>>>]   | **Error**    | PASS      |
+|  TC16     |arithmetic |"3.0+54.1+4.2"|[><>>>]| ADD("+") | PASS      |
 
 Du kan tillföra kommentarer om din tokeniserare skiljer sig något från standard. 
 
@@ -61,6 +76,13 @@ Du kan tillföra kommentarer om din tokeniserare skiljer sig något från standa
 Lista de enskilda testfallen. En rad per testfall.
 | Namn      | Grammatik | Sträng | Sekvens | Förväntat Aktivt Token | PASS/FAIL |
 | --------- | --------- | ------ | ------- | ------------ | --------- |
+|  TC17 - Tokenizer should move one step forward and identify SUB  |advancedArithmetic| "3 - 1" | [>] |SUB("-") | PASS |
+|  TC18 - Tokenizer should identify LEFTPAR | advancedArithmetic| "(3 + 4) * 54" | [] |LEFTPAR("(") | PASS |
+|  TC19 - Tokenizer should move four steps forward and identify RIGHTPAR |advancedArithmetic| "(3 + 4) * 54" | [] |RIGHTPAR(")") | PASS |
+|  TC20 - Tokenizer should identify DIV |advancedArithmetic| "14 / 2" | [] |DIV("/") | PASS |
+|  TC21 - Tokenizer should not move past END | wordAndDot | "b" | [>] | END | PASS |
+|  TC22 - Tokenizer should not move past first token | wordAndDot | "b" | [<] | WORD("b") | PASS |
+|  TC23 - Tokenizer should choose longest match | maximalMunch | "3.14" | [] | FLOAT("3.14") | PASS |
 |           |           |        |         |              |           |
 
 ## Kodkvalitetskrav
