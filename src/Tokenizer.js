@@ -58,25 +58,28 @@ export class Tokenizer {
 
   _analyzeStringForTokens () {
     while (this.stringToAnalyze.length > 0) {
-      let newTokenValue = ''
-      let newTokenType = ''
-
-      for (let i = 0; i < this._grammarType.length; i++) {
-        this.stringToAnalyze = this.stringToAnalyze.trim()
-        const currentMatch = this._findMatches(this._grammarType[i])
-        if (this._applyMaximalMunch(currentMatch, newTokenValue)) {
-          newTokenValue = currentMatch
-          newTokenType = this._grammarType[i].tokenType
-        }
-      }
-      this._handleNoMatch(newTokenValue)
-      this.stringToAnalyze = this.stringToAnalyze.slice(newTokenValue.length)
-      this._addToken(newTokenType, newTokenValue)
+      this._compareStringToGrammars()
     }
   }
 
+  _compareStringToGrammars() {
+    let newTokenValue = ''
+    let newTokenType = ''
+
+    for (let i = 0; i < this._grammarType.length; i++) {
+      const currentMatch = this._findMatchingToken(this._grammarType[i])
+      if (this._applyMaximalMunch(currentMatch, newTokenValue)) {
+        newTokenValue = currentMatch
+        newTokenType = this._grammarType[i].tokenType
+      }
+    }
+    this._handleNoMatch(newTokenValue)
+    this.stringToAnalyze = this.stringToAnalyze.slice(newTokenValue.length)
+    this._addToken(newTokenType, newTokenValue)
+  }
+
   _applyMaximalMunch(currentLongestMatch, newMatch) {
-     return currentLongestMatch.length > newMatch.length
+    return currentLongestMatch.length > newMatch.length
   }
 
   _isOnlySpaces () {
@@ -90,8 +93,9 @@ export class Tokenizer {
    * @param {object} grammar An object representing the current grammar.
    * @returns {string} a string representing the matching string.
    */
-  _findMatches (grammar) {
+  _findMatchingToken (grammar) {
     let match = ''
+    this.stringToAnalyze = this.stringToAnalyze.trim()    
     for (let i = 0; i < this.stringToAnalyze.length; i++) {
       if (grammar.tokenRegExp.test(this.stringToAnalyze[i])) {
         match += this.stringToAnalyze[i]
