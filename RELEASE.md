@@ -26,8 +26,7 @@
 Förtydligande: Examinator kommer sätta betyg oberoende på vad ni anser. 
 
 ## Återanvändning
-*Beskriv hur du anpassat din kod och instruktioner för att någon annan programmerare skall kunna använda din tokenizer. Om du skrivit instruktioner för din användare länka till dessa. Om inte beskriv här hur någon skall göra för att använda din kod med sin egen grammatik.*
-Följande instruktioner är hämtat från repositoriets readme-fil: 
+Följande instruktioner är hämtat från repositoriets readme-fil och är därför på engelska: 
 
 ### How to use the tokenizer:
 Import initTokenizer from the app.js file. You can then get a tokenizer object by calling initTokenizer and provide it with two arguments:
@@ -49,6 +48,7 @@ If the string contains characters that does not match the given grammar - an err
 
 `currentActiveToken`
 Returns the current active token.
+Initially, this is always the first matching token.
 The last token is always END.
 
 `moveToNextToken()`
@@ -95,7 +95,7 @@ Tokenizer är själv tokeniseraren till vilken det skickas in två argument - en
 
 Tokenizer har fyra publika metoder: 
 - tokenize: initierar sjäva analysen av strängen och orkestrerar flödet
-- currentActiveToken: en getter som returnerar det Token-objekt som förnuvarande är valt som aktivt
+- currentActiveToken: en getter som returnerar det Token-objekt som förnuvarande är valt som aktivt, initialt är det alltid det första matchande tokenet
 - moveToNextToken: väljer nästa token som aktivt, metoden returnerar ingenting
 - moveToPreviousToken: väljer föregående token som aktivt, metoden returnerar ingenting
 
