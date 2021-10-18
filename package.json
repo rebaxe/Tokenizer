@@ -1,5 +1,5 @@
 {
-  "name": "Laboration-1",
+  "name": "laboration-1",
   "version": "1.0.0",
   "description": "1DV610 - Laboration 1 - Tokenizer",
   "type": "module",
@@ -14,6 +14,7 @@
     "type": "git",
     "url": "git@gitlab.lnu.se:1dv610/student/ra223ai/l1.git"
   },
+  "license": "MIT",
   "author": "Rebecca Axelsson <ra223ai@student.lnu.se>",
   "devDependencies": {
     "chai": "^4.3.4",

@@ -13,10 +13,6 @@ const grammarObject = {
 You can then call the methods below on your Tokenizer-object.
 ## Public interface
 ### Methods
-`tokenize()`
-The method that analyzes the given string according to the given grammar.
-If the string contains characters that does not match the given grammar - an error will be thrown.
-
 `currentActiveToken`
 Returns the current active token.
 The last token is always END.
@@ -43,10 +39,6 @@ const grammars = [{
 }]
 
 const tokenizer = initTokenizer(grammars, 'Hello world.')
-
-// Analyze your string for tokens.
-
-tokenizer.tokenize()
 
 // To get the active token:
 
