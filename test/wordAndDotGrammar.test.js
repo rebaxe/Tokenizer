@@ -75,7 +75,6 @@ describe('Word-And-Dot Grammar Tests', () => {
     expect(tokenizer.currentActiveToken.tokenValue).equal('a')
   })
   it('TC11 - Tokenizer should throw error when hitting unvalid tokens', () => {
-    const tokenizer = new initTokenizer(wordAndDotGrammar, '!')
-    expect(() => tokenizer.tokenize()).to.throw(Error, 'Found tokens that did not match')
+    expect(() => initTokenizer(wordAndDotGrammar, '!')).to.throw(Error, 'Found tokens that did not match')
   })
 })

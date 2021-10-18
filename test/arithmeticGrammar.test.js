@@ -25,8 +25,7 @@ describe('Arithmetic Grammar Tests', () => {
     expect(tokenizer.currentActiveToken.tokenValue).equal('*')
   })
   it('TC15 - Tokenizer should throw error when hitting unvalid tokens', () => {
-    const tokenizer = initTokenizer(arithmeticGrammar, '3+5 # 4')
-    expect(() => tokenizer.tokenize()).to.throw(Error, 'Found tokens that did not match')
+    expect(() => initTokenizer(arithmeticGrammar, '3+5 # 4')).to.throw(Error, 'Found tokens that did not match')
   })
   it('TC16 - Tokenizer should move one step forward, one backwards, three forward and then identify ADD', () => {
     const tokenizer = initTokenizer(arithmeticGrammar, '3.0+54.1 + 4.2')
