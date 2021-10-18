@@ -6,8 +6,6 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
-    "lint": "npx eslint ./src || exit 0",
-    "lint:fix": "npx eslint ./src --fix || exit 0",
     "test": "mocha"
   },
   "repository": {
