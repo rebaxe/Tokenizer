@@ -81,19 +81,6 @@ export class Tokenizer {
     this._handleNoMatch(newToken.tokenValue)
     this._cutTokenFromString(newToken.tokenValue)
     this._addToken(newToken)
-    // let newTokenValue = ''
-    // let newTokenType = ''
-
-    // for (let i = 0; i < this._grammarType.length; i++) {
-    //   const currentMatch = this._findMatchingToken(this._grammarType[i])
-    //   if (this._applyMaximalMunch(currentMatch, newTokenValue)) {
-    //     newTokenValue = currentMatch
-    //     newTokenType = this._grammarType[i].tokenType
-    //   }
-    // }
-    // this._handleNoMatch(newTokenValue)
-    // this.stringToAnalyze = this.stringToAnalyze.slice(newTokenValue.length)
-    // this._addToken(newTokenType, newTokenValue)
   }
 
   /**
@@ -121,25 +108,6 @@ export class Tokenizer {
     return !regExp.test(this.stringToAnalyze)
   }
 
-  // /**
-  //  * Checks if the string matches the current grammar.
-  //  *
-  //  * @param {object} grammar An object representing the current grammar.
-  //  * @returns {string} a string representing the matching string.
-  //  */
-  // _findMatchingToken (grammar) {
-  //   let match = ''
-  //   this.stringToAnalyze = this.stringToAnalyze.trim()    
-  //   for (let i = 0; i < this.stringToAnalyze.length; i++) {
-  //     if (grammar.tokenRegExp.test(this.stringToAnalyze[i])) {
-  //       match += this.stringToAnalyze[i]
-  //     } else {
-  //       return match
-  //     }
-  //   }
-  //   return match
-  // }
-
   /**
    * Adds a token to found matching tokens.
    *
@@ -162,14 +130,9 @@ export class Tokenizer {
   }
 
   moveToNextToken () {
-    // Only allow to get next token as long as active token is not the last match.
-    
     if (this._isNotLastToken()) {
       this._activeTokenIndex++
     }
-    // if (this._activeTokenIndex < (this.matchingTokenSet.length - 1)) {
-    //   this._activeTokenIndex++
-    // }
     this._updateActiveToken()
   }
 
@@ -181,9 +144,6 @@ export class Tokenizer {
     if (this._isNotFirstToken()) {
       this._activeTokenIndex--
     }
-    // if (this._activeTokenIndex > 0) {
-    //   this._activeTokenIndex--
-    // }
     this._updateActiveToken()
   }
 

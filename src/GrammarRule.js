@@ -37,7 +37,7 @@
    * @param {string} string A string representing the string to compare to grammar.
    * @returns {string} a string representing the matching string.
    */
-   findMatchingToken (string) {
+  findMatchingToken (string) {
     let match = ''
     string = this._trimString(string) 
     for (let i = 0; i < string.length; i++) {
